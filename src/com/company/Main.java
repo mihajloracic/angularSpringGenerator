@@ -6,30 +6,29 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
 	    List<Column> columns = new ArrayList<Column>();
-	    HTMLGenerator generator = new HTMLGenerator(columns);
-	    columns.add(new Column("Nazivkomint","text"));
-	    columns.add(new Column("Mesto","text"));
-	    columns.add(new Column("SifKomint","text"));
-	    columns.add(new Column("SaldoKupac","text"));
-	    columns.add(new Column("k432xx","text"));
-	    columns.add(new Column("k14000","text"));
-	    columns.add(new Column("SaldoDobavljac","text"));
-	    columns.add(new Column("Saldo","text"));
-	    columns.add(new Column("Kupac","text"));
-	    columns.add(new Column("KupAv","text"));
-	    columns.add(new Column("Dobavljac","text"));
-	    columns.add(new Column("DobAv","text"));
-	    columns.add(new Column("StatusKom","text"));
-	    columns.add(new Column("Poslovnica","text"));
-	    columns.add(new Column("Referent","text"));
-	    columns.add(new Column("Ime","text"));
-	    columns.add(new Column("ReferentDob","text"));
-	    columns.add(new Column("ReferentDobavljaca","text"));
+	    HTMLGenerator generator = new HTMLGenerator(columns,"Master detail izvestaj","masterdetail");
+	    columns.add(new Column("godina","text"));
+	    columns.add(new Column("BrUgovora","text"));
+	    columns.add(new Column("VR","text"));
+	    columns.add(new Column("Rbr","text"));
+	    columns.add(new Column("Datum","text"));
+	    columns.add(new Column("Valuta","text"));
+	    columns.add(new Column("IznosRobe","text"));
+	    columns.add(new Column("IznosPoreza","text"));
+	    columns.add(new Column("IznosRabata","text"));
+	    columns.add(new Column("IznosKupac","text"));
+	    columns.add(new Column("IznosAvansa","text"));
+	    columns.add(new Column("RbrTendera","text"));
+
+
+
 		generateHTML(generator);
     }
 
 	private static void generateHTML(HTMLGenerator generator) {
 		StringBuilder sb = new StringBuilder();
+		sb.append(generator.header());
+		sb.append(generator.heading());
     	sb.append(generator.openTable());
 		sb.append(generator.generateHeader());
 		sb.append(generator.closeRow());
@@ -43,6 +42,7 @@ public class Main {
 		sb.append(generator.closeRow());
 		sb.append("</tbody>");
 		sb.append(generator.closeTable());
+		sb.append(generator.closer());
 		System.out.println(sb.toString());
 	}
 }

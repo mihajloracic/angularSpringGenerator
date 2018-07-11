@@ -5,9 +5,13 @@ import java.util.List;
 
 public class HTMLGenerator {
     List<Column> columns;
+    String tableName;
+    String alias;
 
-    public HTMLGenerator(List<Column> columns) {
+    public HTMLGenerator(List<Column> columns, String tableName, String alias) {
         this.columns = columns;
+        this.tableName = tableName;
+        this.alias = alias;
     }
 
     public String generateHeader(){
@@ -61,5 +65,43 @@ public class HTMLGenerator {
     }
     public String closeTable(){
         return "</table>";
+    }
+
+    public String header(){
+        return "<!DOCTYPE html>\n" +
+                "<html>\n" +
+                "<head>\n" +
+                "    <!-- Latest compiled and minified CSS -->\n" +
+                "    <link rel=\"stylesheet\" href=\"/css/bootstrap.min.css\">\n" +
+                "\n" +
+                "    <!-- jQuery library -->\n" +
+                "    <script src=\"js/jquery.min.js\"></script>\n" +
+                "    <link href=\"//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css\" rel=\"stylesheet\">\n" +
+                "    <!-- Latest compiled JavaScript -->\n" +
+                "    <script src=\"js/bootstrap.min.js\"></script>\n" +
+                "    <script src=\"js/angular.js\"></script>\n" +
+                "</head>\n" +
+                "<body ng-app=\"myApp\">\n" +
+                "<div ng-include=\"'fragments/navbar.htm'\"></div>\n" +
+                "<div class=\"container\"  ng-controller=\"customeCtrl\">\n";
+    }
+    public String closer(){
+        return "</div>\n" +
+                "<script src=\"js/app.js\" type=\"text/javascript\" charset=\"utf-8\"></script>\n" +
+                "<script src=\"js/navbar.js\" type=\"text/javascript\" charset=\"utf-8\"></script>\n" +
+                "<script type=\"text/javascript\" charset=\"utf-8\">\n" +
+                "    app.controller('customeCtrl', function($scope, $http, $rootScope) {\n" +
+                "        $http.get(\""+alias+"\").then(function (response) {\n" +
+                "            $scope.names = response.data;\n" +
+                "            console.log($scope.names)\n" +
+                "        })\n" +
+                "    });\n" +
+                "</script>\n" +
+                "</body>\n" +
+                "</html>";
+    }
+
+    public String heading(){
+        return MessageFormat.format("<h1>{0}</h1>\n", tableName);
     }
 }
