@@ -4,25 +4,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
-    public static void main(String[] args) {
+
+	private static FileGenerator fileGenerator;
+
+	public static void main(String[] args) {
 	    List<Column> columns = new ArrayList<Column>();
-	    HTMLGenerator generator = new HTMLGenerator(columns,"Master detail izvestaj","masterdetail");
-	    columns.add(new Column("godina","text"));
-	    columns.add(new Column("BrUgovora","text"));
-	    columns.add(new Column("VR","text"));
-	    columns.add(new Column("Rbr","text"));
+		fileGenerator = new FileGenerator();
+		String alias = "IzvestajTroskova";
+	    HTMLGenerator generator = new HTMLGenerator(columns,"Master detail izvestaj",alias);
+	    RepositoryGenerator repositoryGenerator = new RepositoryGenerator(alias,Config.ExampleSelect);
+		fileGenerator.genenrateFile(Config.RepositoryPath+"//"+ generator.getAlias()+"Repository.java", repositoryGenerator.generateRepository());
+	    System.out.println(repositoryGenerator.generateRepository());
+	    ControllerGenerator controllerGenerator = new ControllerGenerator(alias);
+	    //System.out.println(controllerGenerator.generateController());
+		//fileGenerator.genenrateFile(Config.ControllerPath+"//"+ generator.getAlias()+"Controller.java", controllerGenerator.generateController());
+		columns.add(new Column("BrUgovora","text"));
+	    columns.add(new Column("SifKomint","text"));
+	    columns.add(new Column("NazivKomint","text"));
+	    columns.add(new Column("Mesto","text"));
 	    columns.add(new Column("Datum","text"));
-	    columns.add(new Column("Valuta","text"));
-	    columns.add(new Column("IznosRobe","text"));
-	    columns.add(new Column("IznosPoreza","text"));
-	    columns.add(new Column("IznosRabata","text"));
-	    columns.add(new Column("IznosKupac","text"));
-	    columns.add(new Column("IznosAvansa","text"));
-	    columns.add(new Column("RbrTendera","text"));
-
-
-
-		generateHTML(generator);
+	    columns.add(new Column("DatumRok","text"));
+		//generateHTML(generator);
     }
 
 	private static void generateHTML(HTMLGenerator generator) {
@@ -43,6 +45,7 @@ public class Main {
 		sb.append("</tbody>");
 		sb.append(generator.closeTable());
 		sb.append(generator.closer());
-		System.out.println(sb.toString());
+		//System.out.println(sb.toString());
+		fileGenerator.genenrateFile(Config.HTMLPagePath+"//"+ generator.getAlias()+".html", sb.toString());
 	}
 }

@@ -91,7 +91,7 @@ public class HTMLGenerator {
                 "<script src=\"js/navbar.js\" type=\"text/javascript\" charset=\"utf-8\"></script>\n" +
                 "<script type=\"text/javascript\" charset=\"utf-8\">\n" +
                 "    app.controller('customeCtrl', function($scope, $http, $rootScope) {\n" +
-                "        $http.get(\""+alias+"\").then(function (response) {\n" +
+                "        $http.get(\""+alias+"Request\").then(function (response) {\n" +
                 "            $scope.names = response.data;\n" +
                 "            console.log($scope.names)\n" +
                 "        })\n" +
@@ -103,5 +103,29 @@ public class HTMLGenerator {
 
     public String heading(){
         return MessageFormat.format("<h1>{0}</h1>\n", tableName);
+    }
+
+    public List<Column> getColumns() {
+        return columns;
+    }
+
+    public void setColumns(List<Column> columns) {
+        this.columns = columns;
+    }
+
+    public String getTableName() {
+        return tableName;
+    }
+
+    public void setTableName(String tableName) {
+        this.tableName = tableName;
+    }
+
+    public String getAlias() {
+        return alias;
+    }
+
+    public void setAlias(String alias) {
+        this.alias = alias;
     }
 }
